@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#0f3443</color>
+    <color name="colorPrimaryDark">#0f3443</color>
+    <color name="colorAccent">#53bf92</color>
+    <color name="navigationbar_color">#14ffffff</color>
+    <color name="alertStrokColor">#a0a0a0</color>
+    <color name="colorRow">#3fffffff</color>
+
+    <color name="colorRowLight">#6fffffff</color>
+    <color name="colorRowLight2">#24ffffff</color>
+    <color name="colorBottomBar">#510d2b38</color>
+    <color name="fullColorGradient">#ea223344</color>
+    <color name="transparent">@android:color/transparent</color><!--set transparent-->
+
+    <color name="awayMode">#25ac86</color>
+
+
+    <color name="black">#000000</color>
+    <color name="white">#ffffff</color>
+
+    <color name="startGradient">#34e89e</color>
+    <color name="endGradient">#0f3443</color>
 </resources>
+
+    <!--
+
+    <color name="colorBottomBar">#1e000000</color>-->

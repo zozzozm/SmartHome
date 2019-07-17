@@ -27,4 +27,10 @@
     <string name="groups">Groups</string>
     <string name="devices">Devices</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="_deviceFragments">deviceFragments</string>
+    <string name="__gourpfragment">gourpFragment</string>
+    <string name="__settingfragment">settingFragment</string>
+
 </resources>

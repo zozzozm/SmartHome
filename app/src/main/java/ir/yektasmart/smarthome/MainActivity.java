@@ -1,5 +1,6 @@
 package ir.yektasmart.smarthome;
 
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -20,11 +21,19 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.Menu;
 
+import ir.yektasmart.smarthome.Fragments.DeviceFragment;
+import ir.yektasmart.smarthome.Fragments.GroupFragment;
+import ir.yektasmart.smarthome.Fragments.SettingFragment;
+
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        DeviceFragment.OnFragmentInteractionListener,
+        GroupFragment.OnFragmentInteractionListener,
+        SettingFragment.OnFragmentInteractionListener{
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -33,8 +42,18 @@ public class MainActivity extends AppCompatActivity
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_devices:
+                    DeviceFragment devFragment = new DeviceFragment();
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.contentContainer, devFragment)
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                            .commit();
                     return true;
                 case R.id.navigation_groups:
+                    GroupFragment groupFragment = new GroupFragment();
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.contentContainer, groupFragment)
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                            .commit();
                     return true;
                 case R.id.navigation_settings:
                     return true;
@@ -120,5 +139,10 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }

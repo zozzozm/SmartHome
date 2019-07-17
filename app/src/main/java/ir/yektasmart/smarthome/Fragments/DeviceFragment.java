@@ -3,13 +3,21 @@ package ir.yektasmart.smarthome.Fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 
+import androidx.fragment.app.Fragment;
+
+import java.util.ArrayList;
+
+import ir.yektasmart.smarthome.Adapter.BaseDeviceAdapter;
+import ir.yektasmart.smarthome.MainActivity;
+import ir.yektasmart.smarthome.Model.BaseDevice;
 import ir.yektasmart.smarthome.R;
 
 /**
@@ -20,11 +28,15 @@ import ir.yektasmart.smarthome.R;
  * Use the {@link DeviceFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DeviceFragment extends Fragment {
+public class DeviceFragment extends Fragment implements AdapterView.OnItemClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    ArrayList<BaseDevice> baseDeviceArrayList;
+    ListView lv_Device;
+    BaseDeviceAdapter modules;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -89,9 +101,37 @@ public class DeviceFragment extends Fragment {
     }
 
     @Override
+    public void onStart() {
+        try {
+
+            super.onStart();
+
+            baseDeviceArrayList = MainActivity.mDB.getBaseModules();
+
+            View view = getView();
+
+            if (view != null) {
+                //container = (LinearLayout) view.findViewById(R.id.deviceLinearLayout);
+                lv_Device = (ListView) view.findViewById(R.id.lv_dev);
+                lv_Device.setItemsCanFocus(false);
+                modules = new BaseDeviceAdapter(getActivity(), R.layout.row_module, this.baseDeviceArrayList);
+                lv_Device.setAdapter(modules);
+                lv_Device.setOnItemClickListener(this);
+
+            }
+        }catch (Exception e){e.printStackTrace();}
+
+    }
+
+    @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
     }
 
     /**

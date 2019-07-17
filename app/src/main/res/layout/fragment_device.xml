@@ -5,10 +5,17 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.DeviceFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <ListView
+        android:padding="8dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/_deviceFragments" />
+        android:layout_height="wrap_content"
+        android:id="@+id/lv_dev"
+        android:dividerHeight="4sp"
+        android:layout_gravity="start"
+        android:gravity="start"
+        android:foregroundGravity="left"
+        android:layoutAnimation="@anim/layout_item_slide_in"
+        android:divider="@android:color/transparent" />
 
 </FrameLayout>

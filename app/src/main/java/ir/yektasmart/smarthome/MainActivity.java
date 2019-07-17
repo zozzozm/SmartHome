@@ -1,5 +1,6 @@
 package ir.yektasmart.smarthome;
 
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -35,6 +36,11 @@ public class MainActivity extends AppCompatActivity
         GroupFragment.OnFragmentInteractionListener,
         SettingFragment.OnFragmentInteractionListener{
 
+
+    public static DataBase mDB ;
+
+    private Context context;
+
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -56,6 +62,11 @@ public class MainActivity extends AppCompatActivity
                             .commit();
                     return true;
                 case R.id.navigation_settings:
+                    SettingFragment settingFragment = new SettingFragment();
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.contentContainer, settingFragment)
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                            .commit();
                     return true;
             }
             return false;
@@ -86,6 +97,20 @@ public class MainActivity extends AppCompatActivity
 
         BottomNavigationView navView = findViewById(R.id.nav_bottom_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+
+        context = this;
+        mDB = new DataBase(this);
+
+
+        mDB.addDevice("a020a618765d","MusicalStrip","1234",5,0,10000,0,0 , DataBase.Confilict.replace);
+//        mDB.addUser("UUID1: User Unique Identifier to distinguish users", "Ali" ,1 ,"this is Description.","cell phone" );
+        mDB.seeTypes();
+        mDB.seeModules();
+        mDB.seeRgbModules();
+        mDB.seeUsers();
+        mDB.seeAccess();
+        mDB.seeGroups2();
     }
 
     @Override

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:toggle="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorRow">
+
+    <ImageView
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:focusable="false"
+        android:id="@+id/rowModuleImage"/>
+    <TextView
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@id/rowModuleImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:id="@+id/rowModuleName"
+        android:textColor="@android:color/white"
+        android:shadowColor="#8d000000"
+        android:shadowDx="1"
+        android:shadowDy="2"
+        android:shadowRadius="2"
+        android:focusable="false"
+        android:layout_gravity="center_vertical" />
+
+
+    <ImageView
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/chevron_right"
+        android:focusable="false"
+        android:id="@+id/rightArr"/>
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toStartOf="@id/rightArr"
+        android:id='@+id/rowModuleSwitch'
+        android:layout_centerVertical="true"
+        android:focusable="false"/>
+<!--    <com.zcw.togglebutton.ToggleButton
+        android:layout_toStartOf="@id/rightArr"
+        android:id='@+id/rowModuleSwitch'
+        android:layout_centerVertical="true"
+        android:focusable="false"
+        toggle:tbOffColor="#49ff0000"
+        toggle:tbOffBorderColor="#49ffffff"
+        android:layout_width="45dp"
+        toggle:tbBorderWidth="0.5dp"
+        android:layout_height="27dp" >
+    </com.zcw.togglebutton.ToggleButton>-->
+</RelativeLayout>

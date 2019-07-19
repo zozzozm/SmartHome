@@ -30,8 +30,11 @@
 
     <string name="off"> Off</string>
     <string name="on">On</string>
+    <string name="pick_a_color">Pick a Color</string>
     <string name="chooseMode">Choose Mode</string>
     <string name="white_light">"White: "</string>
+    <string name="user_favorite_color">user favorite color</string>
+    <string name="color_picker">color picker</string>
     <string-array name="musical">
         <item>Manual</item>
         <item>Musical</item>

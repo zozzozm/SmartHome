@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/transparent">
 
     <ScrollView
@@ -11,8 +10,8 @@
         >
 
         <LinearLayout
-            android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_width="match_parent"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -36,7 +35,7 @@
                         android:layout_height="40dp"
                         android:src="@drawable/shape_oval_rgb_fav"
                         android:layout_margin="4dp"
-                        android:layout_centerHorizontal="true"
+                        android:contentDescription="@string/user_favorite_color"
                         android:id="@+id/pickerFav1" />
 
                     <ImageView
@@ -44,7 +43,7 @@
                         android:layout_height="40dp"
                         android:src="@drawable/shape_oval_rgb_fav"
                         android:layout_margin="4dp"
-                        android:layout_centerHorizontal="true"
+                        android:contentDescription="@string/user_favorite_color"
                         android:id="@+id/pickerFav2" />
 
                     <ImageView
@@ -52,7 +51,7 @@
                         android:layout_height="40dp"
                         android:src="@drawable/shape_oval_rgb_fav"
                         android:layout_margin="4dp"
-                        android:layout_centerHorizontal="true"
+                        android:contentDescription="@string/user_favorite_color"
                         android:id="@+id/pickerFav3" />
 
                     <ImageView
@@ -60,7 +59,7 @@
                         android:layout_height="40dp"
                         android:src="@drawable/shape_oval_rgb_fav"
                         android:layout_margin="4dp"
-                        android:layout_centerHorizontal="true"
+                        android:contentDescription="@string/user_favorite_color"
                         android:id="@+id/pickerFav4" />
 
                     <ImageView
@@ -68,7 +67,7 @@
                         android:layout_height="40dp"
                         android:src="@drawable/shape_oval_rgb_fav"
                         android:layout_margin="4dp"
-                        android:layout_centerHorizontal="true"
+                        android:contentDescription="@string/user_favorite_color"
                         android:id="@+id/pickerFav5" />
                 </LinearLayout>
                 <LinearLayout
@@ -82,6 +81,7 @@
                         android:layout_height="200dp"
                         android:src="@drawable/shape_oval_rgb"
                         android:layout_margin="8dp"
+                        android:contentDescription="@string/color_picker"
                         android:id="@+id/picker" />
                     <Spinner
                         android:layout_width="match_parent"
@@ -111,7 +111,7 @@
                         android:layout_height="40dp"
                         android:src="@drawable/shape_oval_rgb_fav"
                         android:layout_margin="4dp"
-                        android:layout_centerHorizontal="true"
+                        android:contentDescription="@string/user_favorite_color"
                         android:id="@+id/pickerFav10" />
 
                     <ImageView
@@ -119,7 +119,7 @@
                         android:layout_height="40dp"
                         android:src="@drawable/shape_oval_rgb_fav"
                         android:layout_margin="4dp"
-                        android:layout_centerHorizontal="true"
+                        android:contentDescription="@string/user_favorite_color"
                         android:id="@+id/pickerFav9" />
 
                     <ImageView
@@ -127,7 +127,7 @@
                         android:layout_height="40dp"
                         android:src="@drawable/shape_oval_rgb_fav"
                         android:layout_margin="4dp"
-                        android:layout_centerHorizontal="true"
+                        android:contentDescription="@string/user_favorite_color"
                         android:id="@+id/pickerFav8" />
 
                     <ImageView
@@ -135,7 +135,7 @@
                         android:layout_height="40dp"
                         android:src="@drawable/shape_oval_rgb_fav"
                         android:layout_margin="4dp"
-                        android:layout_centerHorizontal="true"
+                        android:contentDescription="@string/user_favorite_color"
                         android:id="@+id/pickerFav7" />
 
                     <ImageView
@@ -143,7 +143,7 @@
                         android:layout_height="40dp"
                         android:src="@drawable/shape_oval_rgb_fav"
                         android:layout_margin="4dp"
-                        android:layout_centerHorizontal="true"
+                        android:contentDescription="@string/user_favorite_color"
                         android:id="@+id/pickerFav6" />
                 </LinearLayout>
             </RelativeLayout>
@@ -177,12 +177,14 @@
                     android:layout_alignBaseline="@id/whiteCheckBox"
                     android:textColor="@color/colorRowLight"
                     android:layout_marginTop="44dp" />
-                <android.support.v7.widget.AppCompatCheckBox
+
+                <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/whiteCheckBox"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true" />
+
             </RelativeLayout>
 
             <RelativeLayout
@@ -191,7 +193,6 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_below="@+id/whiteLayout"
                 android:visibility="visible"
                 android:id="@+id/relativeLayout">
                 <ImageView
@@ -230,13 +231,11 @@
 
             <ImageView
                 android:background="@color/colorRow"
-                android:layout_alignParentBottom="true"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:padding="8dp"
                 android:src="@drawable/play"
                 android:layout_margin="16dp"
-                android:layout_centerHorizontal="true"
                 android:id="@+id/toggle_play" />
 
         </LinearLayout>

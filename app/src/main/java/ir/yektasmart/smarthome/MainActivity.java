@@ -1,5 +1,6 @@
 package ir.yektasmart.smarthome;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -37,10 +38,15 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         DeviceFragment.OnFragmentInteractionListener,
         GroupFragment.OnFragmentInteractionListener,
+        RgbMusicalModuleFragment.OnFragmentInteractionListener,
         SettingFragment.OnFragmentInteractionListener{
 
 
+    @SuppressLint("StaticFieldLeak")
     public static DataBase mDB ;
+    public static currentView currPage = currentView.devicePage;
+    public static String ARG_BaseID = "arg_baseId";
+    public static String ARG_BaseName= "arg_baseName";
 
     private Context context;
 
@@ -51,11 +57,7 @@ public class MainActivity extends AppCompatActivity
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_devices:
-                    DeviceFragment devFragment = new DeviceFragment();
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.contentContainer, devFragment)
-                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                            .commit();
+                    replaceDevFragment();
                     return true;
                 case R.id.navigation_groups:
                     GroupFragment groupFragment = new GroupFragment();
@@ -74,7 +76,17 @@ public class MainActivity extends AppCompatActivity
             }
             return false;
         }
+
     };
+
+
+    private void replaceDevFragment() {
+        DeviceFragment devFragment = new DeviceFragment();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.contentContainer, devFragment)
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .commit();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +126,8 @@ public class MainActivity extends AppCompatActivity
         mDB.seeUsers();
         mDB.seeAccess();
         mDB.seeGroups2();
+
+        replaceDevFragment();
     }
 
     @Override

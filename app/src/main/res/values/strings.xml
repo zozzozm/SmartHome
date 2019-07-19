@@ -27,10 +27,14 @@
     <string name="groups">Groups</string>
     <string name="devices">Devices</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="_deviceFragments">deviceFragments</string>
-    <string name="__gourpfragment">gourpFragment</string>
-    <string name="__settingfragment">settingFragment</string>
+
+    <string name="off"> Off</string>
+    <string name="on">On</string>
+    <string name="chooseMode">Choose Mode</string>
+    <string name="white_light">"White: "</string>
+    <string-array name="musical">
+        <item>Manual</item>
+        <item>Musical</item>
+    </string-array>
 
 </resources>

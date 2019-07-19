@@ -84,9 +84,9 @@ public class BaseDeviceAdapter extends ArrayAdapter<BaseDevice> {
                 //LayoutInflater mInflater = (LayoutInflater) context.getSystemService(MainActivity.LAYOUT_INFLATER_SERVICE);
                 convertView = LayoutInflater.from(context).inflate(R.layout.row_module,null);
                 holder = new ViewHolder();
-                holder.tv = (TextView) convertView.findViewById(R.id.rowModuleName);
-                holder.iv = (ImageView) convertView.findViewById(R.id.rowModuleImage);
-                holder.sw = (Switch) convertView.findViewById(R.id.rowModuleSwitch);
+                holder.tv = convertView.findViewById(R.id.rowModuleName);
+                holder.iv = convertView.findViewById(R.id.rowModuleImage);
+                holder.sw = convertView.findViewById(R.id.rowModuleSwitch);
                 convertView.setTag(holder);
             }
             else {
@@ -135,13 +135,6 @@ public class BaseDeviceAdapter extends ArrayAdapter<BaseDevice> {
                         v.setOnOff(isChecked);
 
                         SendCommand(getItem(position), isChecked? Command.TurnOn:Command.TurnOff, holder.sw.getId(), v);
-                           /* if(getItem(position).get() == 1) {//if module is animating stop animate and save in database
-
-                                MainActivity.mDB.updatePlayMode(getItem(position).getId(), 0);
-
-                                getItem(position).setPlayMode(0);
-                            }*/
-
 
                     }catch (Exception e){
                         e.printStackTrace();

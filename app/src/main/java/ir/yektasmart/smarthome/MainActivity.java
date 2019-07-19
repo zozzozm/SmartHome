@@ -28,7 +28,10 @@ import android.view.Menu;
 
 import ir.yektasmart.smarthome.Fragments.DeviceFragment;
 import ir.yektasmart.smarthome.Fragments.GroupFragment;
+import ir.yektasmart.smarthome.Fragments.RgbMusicalModuleFragment;
 import ir.yektasmart.smarthome.Fragments.SettingFragment;
+import ir.yektasmart.smarthome.Model.BaseDevice;
+import ir.yektasmart.smarthome.Protocol.ModuleType;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -167,7 +170,78 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    public void onClickDev(BaseDevice g) {
+        try {
+//            if (g.getType().equals(ModuleType.RGBW_LAMP.toString())
+//                    || g.getType().equals(ModuleType.RGBW_STRIP.toString())) {
+//
+//                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//                RgbModuleFragment rgbModuleFragment = RgbModuleFragment.newInstance(g.getId(),g.getName());
+//                ft.replace(R.id.contentContainer, rgbModuleFragment);
+//                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+//                ft.addToBackStack(null);
+//                ft.commit();
+//            }
+//            else if (g.getType().equals(ModuleType.RF.toString())) {
+//
+//                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//                RfModuleFragment rfModuleFragment = RfModuleFragment.newInstance(g.getId(),g.getName());
+//                ft.replace(R.id.contentContainer, rfModuleFragment);
+//                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+//                ft.addToBackStack(null);
+//                ft.commit();
+//            }else if (g.getType().equals(ModuleType.LATCH001.toString()) ) {
+//
+//                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//                Latch001ModuleFragment latch001ModuleFragment = Latch001ModuleFragment.newInstance(g.getId(),g.getName());
+//                ft.replace(R.id.contentContainer, latch001ModuleFragment);
+//                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+//                ft.addToBackStack(null);
+//                ft.commit();
+//            } else if (g.getType().equals(ModuleType.LATCH002.toString())) {//is latch 002
+//
+//                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//                Latch002ModuleFragment latch002ModuleFragment = Latch002ModuleFragment.newInstance(g.getId(),g.getName());
+//                ft.replace(R.id.contentContainer, latch002ModuleFragment);
+//                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+//                ft.addToBackStack(null);
+//                ft.commit();
+//            }
+             if (g.getType().equals(ModuleType.MUSICAL_STRIP.toString())) {
+
+                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                 RgbMusicalModuleFragment rgbMusicalModuleFragment = RgbMusicalModuleFragment.newInstance(g.getId(), g.getName());
+                 ft.replace(R.id.contentContainer, rgbMusicalModuleFragment);
+                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                 ft.addToBackStack(null);
+                 ft.commit();
+             }
+//            }else if (g.getType().equals(ModuleType.INTERNET.toString())) {
+//
+//                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//                InternetModuleFragment internetModuleFragment = InternetModuleFragment.newInstance(g.getId(),g.getName());
+//                ft.replace(R.id.contentContainer, internetModuleFragment);
+//                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+//                ft.addToBackStack(null);
+//                ft.commit();
+//
+//            }else {
+//
+//                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//                UnknowModuleFragment unknowModuleFragment = UnknowModuleFragment.newInstance(g.getId(),g.getName());
+//                ft.replace(R.id.contentContainer, unknowModuleFragment);
+//                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+//                ft.addToBackStack(null);
+//                ft.commit();
+//
+//            }
+
+        }catch (Exception e){e.printStackTrace();}
+    }
+
+    @Override
     public void onFragmentInteraction(Uri uri) {
+
 
     }
 }

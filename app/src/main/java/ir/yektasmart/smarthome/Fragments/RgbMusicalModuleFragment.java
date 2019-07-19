@@ -9,6 +9,8 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -93,6 +95,7 @@ public class RgbMusicalModuleFragment extends Fragment implements View.OnClickLi
             baseDevId = getArguments().getInt(MainActivity.ARG_BaseID);
             baseName = getArguments().getString(MainActivity.ARG_BaseName);
         }
+        this.setHasOptionsMenu(true);
     }
 
     @Override
@@ -290,6 +293,13 @@ public class RgbMusicalModuleFragment extends Fragment implements View.OnClickLi
         super.onDetach();
         mListener = null;
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        getActivity().getMenuInflater().inflate(R.menu.menu_edit_remove, menu);
+    }
+
 
     @Override
     public void onClick(final View view) {

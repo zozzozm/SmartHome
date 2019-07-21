@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent">
+
+    <RelativeLayout
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        >
+
+        <TextView
+            android:id="@+id/devNameTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/device_name"
+            android:textAlignment="gravity"
+            android:gravity="center_horizontal"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/colorRowLight"
+            android:layout_marginBottom="4dp"
+            />
+        <EditText
+            android:id="@+id/editModuleName"
+            android:layout_below="@+id/devNameTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:maxLength="16"
+            android:background="@color/colorRow"
+            android:textColorHint="@color/colorRow"
+            android:textColor="@color/colorRowLight"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textAlignment="gravity"
+            android:gravity="center_horizontal"
+            android:maxLines="1"
+            android:inputType="text"
+            android:hint="@string/deviceNameConstraint" />
+
+        <TextView
+            android:id="@+id/devPassTitle"
+            android:layout_below="@id/editModuleName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/device_password"
+            android:paddingTop="16dp"
+            android:textAlignment="gravity"
+            android:gravity="center_horizontal"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/colorRowLight"
+            android:layout_marginBottom="4dp"
+            />
+
+        <EditText
+            android:inputType="textPassword"
+            android:id="@+id/editModulePass"
+            android:layout_below="@+id/devPassTitle"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:maxLength="4"
+            android:background="@color/colorRow"
+            android:textColorHint="@color/colorRow"
+            android:textColor="@color/colorRowLight"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textAlignment="gravity"
+            android:gravity="center_horizontal"
+            android:maxLines="1"
+            android:hint="@string/_4_digits_e_g_1234"/>
+
+        <TextView
+            android:id="@+id/userTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:drawableStart="@drawable/user"
+            android:text="@string/users"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/editModulePass"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            />
+
+        <ImageView
+            android:id="@+id/userEditLine"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/line_horizantal"
+            android:layout_below="@+id/userTitle"
+            />
+
+        <ListView
+            android:layout_marginEnd="32dp"
+            android:layout_marginStart="32dp"
+            android:layout_below="@+id/userEditLine"
+            android:id="@+id/userListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </ListView>
+    </RelativeLayout>
+
+</LinearLayout>

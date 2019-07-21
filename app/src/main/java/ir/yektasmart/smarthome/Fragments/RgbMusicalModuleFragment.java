@@ -27,6 +27,7 @@ import android.widget.TextView;
 
 import java.util.Objects;
 
+import ir.yektasmart.smarthome.Const;
 import ir.yektasmart.smarthome.HSVColorPickerDialog;
 import ir.yektasmart.smarthome.MainActivity;
 import ir.yektasmart.smarthome.Model.BaseDevice;
@@ -34,6 +35,7 @@ import ir.yektasmart.smarthome.Model.RgbDevice;
 import ir.yektasmart.smarthome.Model.Value;
 import ir.yektasmart.smarthome.Model.yColor;
 import ir.yektasmart.smarthome.Protocol.Command;
+import ir.yektasmart.smarthome.Protocol.UtilFunc;
 import ir.yektasmart.smarthome.R;
 import ir.yektasmart.smarthome.currentView;
 
@@ -675,25 +677,16 @@ public class RgbMusicalModuleFragment extends Fragment implements View.OnClickLi
         int blue = Color.blue(selectedColor);
         int alpha = Color.alpha(selectedColor);
         drawable.setColor(Color.argb(alpha,red,green,blue));
-/*        Value v = new Value();
-        v.setColor(new yColor(red,green,blue));*/
         rgbDevice.setColor(selectedColor);
-/*        MainActivity.mDB.open();
-        MainActivity.mDB.updateModuleColor(g.getId(),selectedColor);
-        MainActivity.mDB.close();*/
-        // MainActivity.CommunicationProtocol(g, null,fav[0].getId(),v);
     }
 
     private void sendCommand(Command cmd, int id, Value v){
-//        if(Const.isAwayMode) {
-//            //MainActivity.CommunicationProtocol(baseDevice, cmd, id, v);
-//            UtilFunc utilFunc = new UtilFunc(getActivity().getBaseContext());
-//            utilFunc.CommunicationProtocol(baseDevice, cmd, id, v);
-//            //MainActivity.sendSms(baseDevice, cmd,null);
-//        }else {
-//            //MainActivity.CommunicationProtocol(baseDevice, cmd, id, v);
-//            UtilFunc utilFunc = new UtilFunc(getActivity().getBaseContext());
-//            utilFunc.CommunicationProtocol(baseDevice, cmd, id, v);
-//        }
+        if(Const.isAwayMode) {
+            UtilFunc utilFunc = new UtilFunc(getActivity().getBaseContext());
+            utilFunc.CommunicationProtocol(baseDevice, cmd, id, v);
+        }else {
+            UtilFunc utilFunc = new UtilFunc(getActivity().getBaseContext());
+            utilFunc.CommunicationProtocol(baseDevice, cmd, id, v);
+        }
     }
 }

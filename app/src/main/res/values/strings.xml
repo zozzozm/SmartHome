@@ -45,7 +45,27 @@
         <item>Musical</item>
     </string-array>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="rfButtonDescription">Long click available</string>
+
+
+    <string name="devPassLenWrong">Password must be 4 characters.</string>
+    <string name="devNameWrong">Max 64 characters.</string>
+    <string name="devNameWrongEmpty">Not allowed to be empty</string>
+
+    <string name="_4_digits_e_g_1234" translatable="false">4 characters. E.g:1234</string>
+    <string name="deviceNameConstraint">Max 64 characters</string>
+    <string name="device_password">Device password</string>
+    <string name="device_name">Device Name</string>
+
+    <string name="cancel">Cansel</string>
+    <string name="delete_this_device">Delete this device?</string>
+    <string name="DELETE" translatable="false">DELETE</string>
+    <string name="delete_device">Delete this device?</string>
+    <string name="admin_delete_device">If delete this device, you should config again to can set permission to others. are you sure to delete any way?</string>
+
+
+
+    <string name="users">Users:</string>
+
 
 </resources>

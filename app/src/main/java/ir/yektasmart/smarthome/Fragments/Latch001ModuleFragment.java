@@ -15,10 +15,12 @@ import android.widget.TextView;
 
 import com.suke.widget.SwitchButton;
 
+import ir.yektasmart.smarthome.Const;
 import ir.yektasmart.smarthome.MainActivity;
 import ir.yektasmart.smarthome.Model.BaseDevice;
 import ir.yektasmart.smarthome.Model.Value;
 import ir.yektasmart.smarthome.Protocol.Command;
+import ir.yektasmart.smarthome.Protocol.UtilFunc;
 import ir.yektasmart.smarthome.R;
 import ir.yektasmart.smarthome.currentView;
 
@@ -160,15 +162,12 @@ public class Latch001ModuleFragment extends Fragment implements SwitchButton.OnC
     }
 
     void sendCommand(Command cmd, int id, Value v){
-//        if(Const.isAwayMode) {
-//            //MainActivity.CommunicationProtocol(baseDevice, cmd, id, v);
-//            UtilFunc utilFunc = new UtilFunc(getActivity().getBaseContext());
-//            utilFunc.CommunicationProtocol(baseDevice, cmd, id, v);
-//            //MainActivity.sendSms(baseDevice, cmd,null);
-//        }else {
-//            //MainActivity.CommunicationProtocol(baseDevice, cmd, id, v);
-//            UtilFunc utilFunc = new UtilFunc(getActivity().getBaseContext());
-//            utilFunc.CommunicationProtocol(baseDevice, cmd, id, v);
-//        }
+        if(Const.isAwayMode) {
+            UtilFunc utilFunc = new UtilFunc(getActivity().getBaseContext());
+            utilFunc.CommunicationProtocol(baseDevice, cmd, id, v);
+        }else {
+            UtilFunc utilFunc = new UtilFunc(getActivity().getBaseContext());
+            utilFunc.CommunicationProtocol(baseDevice, cmd, id, v);
+        }
     }
 }

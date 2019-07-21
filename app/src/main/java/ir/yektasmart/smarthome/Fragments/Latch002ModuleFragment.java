@@ -7,16 +7,20 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.suke.widget.SwitchButton;
 
+import ir.yektasmart.smarthome.Const;
 import ir.yektasmart.smarthome.MainActivity;
 import ir.yektasmart.smarthome.Model.BaseDevice;
 import ir.yektasmart.smarthome.Model.Value;
 import ir.yektasmart.smarthome.Protocol.Command;
+import ir.yektasmart.smarthome.Protocol.UtilFunc;
 import ir.yektasmart.smarthome.R;
 import ir.yektasmart.smarthome.currentView;
 
@@ -152,6 +156,13 @@ public class Latch002ModuleFragment extends Fragment implements SwitchButton.OnC
 
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        /*super.onCreateOptionsMenu(menu, inflater);*/
+        menu.clear();
+        getActivity().getMenuInflater().inflate(R.menu.menu_edit_remove, menu);
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -168,15 +179,12 @@ public class Latch002ModuleFragment extends Fragment implements SwitchButton.OnC
     }
 
     void sendCommand(Command cmd, int id, Value v){
-//        if(Const.isAwayMode) {
-//            //MainActivity.CommunicationProtocol(baseDevice, cmd, id, v);
-//            UtilFunc utilFunc = new UtilFunc(getActivity().getBaseContext());
-//            utilFunc.CommunicationProtocol(baseDevice, cmd, id, v);
-//            //MainActivity.sendSms(baseDevice, cmd,null);
-//        }else {
-//            //MainActivity.CommunicationProtocol(baseDevice, cmd, id, v);
-//            UtilFunc utilFunc = new UtilFunc(getActivity().getBaseContext());
-//            utilFunc.CommunicationProtocol(baseDevice, cmd, id, v);
-//        }
+        if(Const.isAwayMode) {
+            UtilFunc utilFunc = new UtilFunc(getActivity().getBaseContext());
+            utilFunc.CommunicationProtocol(baseDevice, cmd, id, v);
+        }else {
+            UtilFunc utilFunc = new UtilFunc(getActivity().getBaseContext());
+            utilFunc.CommunicationProtocol(baseDevice, cmd, id, v);
+        }
     }
 }

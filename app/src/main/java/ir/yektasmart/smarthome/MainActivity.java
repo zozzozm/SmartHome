@@ -2,13 +2,16 @@ package ir.yektasmart.smarthome;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.net.DhcpInfo;
 import android.net.Uri;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import android.os.Vibrator;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -26,11 +29,20 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.view.Menu;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
+
+import org.eclipse.paho.client.mqttv3.MqttClient;
+
+import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
 
 import ir.yektasmart.smarthome.Fragments.DeviceFragment;
+import ir.yektasmart.smarthome.Fragments.EditModuleFragment;
 import ir.yektasmart.smarthome.Fragments.GroupFragment;
 import ir.yektasmart.smarthome.Fragments.Latch001ModuleFragment;
 import ir.yektasmart.smarthome.Fragments.Latch002ModuleFragment;
+import ir.yektasmart.smarthome.Fragments.RfModuleFragment;
 import ir.yektasmart.smarthome.Fragments.RgbMusicalModuleFragment;
 import ir.yektasmart.smarthome.Fragments.SettingFragment;
 import ir.yektasmart.smarthome.Model.BaseDevice;
@@ -43,9 +55,40 @@ public class MainActivity extends AppCompatActivity
         RgbMusicalModuleFragment.OnFragmentInteractionListener,
         SettingFragment.OnFragmentInteractionListener,
         Latch001ModuleFragment.OnFragmentInteractionListener,
-        Latch002ModuleFragment.OnFragmentInteractionListener
+        Latch002ModuleFragment.OnFragmentInteractionListener,
+        RfModuleFragment.OnFragmentInteractionListener,
+        EditModuleFragment.OnFragmentInteractionListener
 {
 
+    private static final String TAG = "MainActivity";
+    private static final int PERMISSION_REQUEST_CODE = 1;
+    public static int PERMISSIONS = 0;
+    public static String UUID = "-1";
+    private static String  macAddress = "200000000000";
+    Toast toast;
+
+    public static Boolean  searching_flag = false;
+    public static int scrollyDev=0;
+    public static sharedPrefrence shP;
+    public static ExecutorService pool;
+
+    public static Vibrator vib;
+    public static int vib_delay = 50;
+    private static final int TIME_INTERVAL = 2000; // # milliseconds, desired time passed between two back presses.
+    private long mBackPressed;
+
+    public static String ARG_GroupID = "arg_groupId";
+    public static String ARG_GroupName = "arg_groupName";
+    public static String ARG_BaseTypeId = "arg_baseTypeId";
+
+    public static ArrayList<BaseDevice> InternetDevices;
+    private MqttClient mqttClient;
+
+    DhcpInfo d;
+    WifiManager wifii;
+
+    RelativeLayout mainLayout;
+    DrawerLayout drawer;
 
     @SuppressLint("StaticFieldLeak")
     public static DataBase mDB ;
@@ -127,6 +170,8 @@ public class MainActivity extends AppCompatActivity
         mDB.addDevice("a020a618765e","switch001","1234",8,0,10000,0,0 , DataBase.Confilict.replace);
         mDB.addDevice("a020a618765f","latch001","1234",9,0,10000,0,0 , DataBase.Confilict.replace);
         mDB.addDevice("a020a618765g","latch002","1234",10,0,10000,0,0 , DataBase.Confilict.replace);
+        mDB.addDevice("a020a618765h","rf","1234",1,0,10000,0,0 , DataBase.Confilict.replace);
+        mDB.addDevice("a020a618765i","internet","1234",0,0,10000,0,0 , DataBase.Confilict.replace);
 
         //        mDB.addUser("UUID1: User Unique Identifier to distinguish users", "Ali" ,1 ,"this is Description.","cell phone" );
         mDB.seeTypes();
@@ -137,6 +182,8 @@ public class MainActivity extends AppCompatActivity
         mDB.seeGroups2();
 
         replaceDevFragment();
+
+        shP = new sharedPrefrence(this);
     }
 
     @Override
@@ -205,16 +252,15 @@ public class MainActivity extends AppCompatActivity
 //                ft.addToBackStack(null);
 //                ft.commit();
 //            }
-//            else if (g.getType().equals(ModuleType.RF.toString())) {
-//
-//                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-//                RfModuleFragment rfModuleFragment = RfModuleFragment.newInstance(g.getId(),g.getName());
-//                ft.replace(R.id.contentContainer, rfModuleFragment);
-//                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-//                ft.addToBackStack(null);
-//                ft.commit();
-//            }else
-            if (g.getType().equals(ModuleType.LATCH001.toString()) ) {
+//            else
+            if (g.getType().equals(ModuleType.RF.toString())) {
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                RfModuleFragment rfModuleFragment = RfModuleFragment.newInstance(g.getId(),g.getName());
+                ft.replace(R.id.contentContainer, rfModuleFragment);
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                ft.addToBackStack(null);
+                ft.commit();
+            } else if (g.getType().equals(ModuleType.LATCH001.toString()) ) {
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 Latch001ModuleFragment latch001ModuleFragment = Latch001ModuleFragment.newInstance(g.getId(),g.getName());
                 ft.replace(R.id.contentContainer, latch001ModuleFragment);

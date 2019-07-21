@@ -29,6 +29,8 @@ import android.view.Menu;
 
 import ir.yektasmart.smarthome.Fragments.DeviceFragment;
 import ir.yektasmart.smarthome.Fragments.GroupFragment;
+import ir.yektasmart.smarthome.Fragments.Latch001ModuleFragment;
+import ir.yektasmart.smarthome.Fragments.Latch002ModuleFragment;
 import ir.yektasmart.smarthome.Fragments.RgbMusicalModuleFragment;
 import ir.yektasmart.smarthome.Fragments.SettingFragment;
 import ir.yektasmart.smarthome.Model.BaseDevice;
@@ -39,7 +41,10 @@ public class MainActivity extends AppCompatActivity
         DeviceFragment.OnFragmentInteractionListener,
         GroupFragment.OnFragmentInteractionListener,
         RgbMusicalModuleFragment.OnFragmentInteractionListener,
-        SettingFragment.OnFragmentInteractionListener{
+        SettingFragment.OnFragmentInteractionListener,
+        Latch001ModuleFragment.OnFragmentInteractionListener,
+        Latch002ModuleFragment.OnFragmentInteractionListener
+{
 
 
     @SuppressLint("StaticFieldLeak")
@@ -119,7 +124,11 @@ public class MainActivity extends AppCompatActivity
 
 
         mDB.addDevice("a020a618765d","MusicalStrip","1234",5,0,10000,0,0 , DataBase.Confilict.replace);
-//        mDB.addUser("UUID1: User Unique Identifier to distinguish users", "Ali" ,1 ,"this is Description.","cell phone" );
+        mDB.addDevice("a020a618765e","switch001","1234",8,0,10000,0,0 , DataBase.Confilict.replace);
+        mDB.addDevice("a020a618765f","latch001","1234",9,0,10000,0,0 , DataBase.Confilict.replace);
+        mDB.addDevice("a020a618765g","latch002","1234",10,0,10000,0,0 , DataBase.Confilict.replace);
+
+        //        mDB.addUser("UUID1: User Unique Identifier to distinguish users", "Ali" ,1 ,"this is Description.","cell phone" );
         mDB.seeTypes();
         mDB.seeModules();
         mDB.seeRgbModules();
@@ -204,33 +213,31 @@ public class MainActivity extends AppCompatActivity
 //                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
 //                ft.addToBackStack(null);
 //                ft.commit();
-//            }else if (g.getType().equals(ModuleType.LATCH001.toString()) ) {
-//
-//                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-//                Latch001ModuleFragment latch001ModuleFragment = Latch001ModuleFragment.newInstance(g.getId(),g.getName());
-//                ft.replace(R.id.contentContainer, latch001ModuleFragment);
-//                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-//                ft.addToBackStack(null);
-//                ft.commit();
-//            } else if (g.getType().equals(ModuleType.LATCH002.toString())) {//is latch 002
-//
-//                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-//                Latch002ModuleFragment latch002ModuleFragment = Latch002ModuleFragment.newInstance(g.getId(),g.getName());
-//                ft.replace(R.id.contentContainer, latch002ModuleFragment);
-//                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-//                ft.addToBackStack(null);
-//                ft.commit();
-//            }
-             if (g.getType().equals(ModuleType.MUSICAL_STRIP.toString())) {
+//            }else
+            if (g.getType().equals(ModuleType.LATCH001.toString()) ) {
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                Latch001ModuleFragment latch001ModuleFragment = Latch001ModuleFragment.newInstance(g.getId(),g.getName());
+                ft.replace(R.id.contentContainer, latch001ModuleFragment);
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                ft.addToBackStack(null);
+                ft.commit();
+            } else if (g.getType().equals(ModuleType.LATCH002.toString())) {//is latch 002
 
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                Latch002ModuleFragment latch002ModuleFragment = Latch002ModuleFragment.newInstance(g.getId(),g.getName());
+                ft.replace(R.id.contentContainer, latch002ModuleFragment);
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                ft.addToBackStack(null);
+                ft.commit();
+            } else if (g.getType().equals(ModuleType.MUSICAL_STRIP.toString())) {
                  FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                  RgbMusicalModuleFragment rgbMusicalModuleFragment = RgbMusicalModuleFragment.newInstance(g.getId(), g.getName());
                  ft.replace(R.id.contentContainer, rgbMusicalModuleFragment);
                  ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                  ft.addToBackStack(null);
                  ft.commit();
-             }
-//            }else if (g.getType().equals(ModuleType.INTERNET.toString())) {
+                }
+//            else if (g.getType().equals(ModuleType.INTERNET.toString())) {
 //
 //                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 //                InternetModuleFragment internetModuleFragment = InternetModuleFragment.newInstance(g.getId(),g.getName());

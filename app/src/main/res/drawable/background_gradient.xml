@@ -5,8 +5,18 @@
         android:startColor= "@color/startGradient"
         android:endColor="@color/endGradient"
         android:type="radial"
-        android:gradientRadius="1200dp"
-        android:centerY="2"
+        android:gradientRadius="800dp"
+        android:centerY="1.5"
        />
 
 </shape>
+
+<!--
+<gradient
+android:angle="90"
+android:startColor="#34e89e"
+android:endColor="#0f3443"
+android:type="radial"
+android:gradientRadius="800dp"
+android:centerY="1.5"
+    />-->

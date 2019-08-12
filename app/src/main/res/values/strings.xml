@@ -64,8 +64,23 @@
     <string name="admin_delete_device">If delete this device, you should config again to can set permission to others. are you sure to delete any way?</string>
 
 
-
     <string name="users">Users:</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="internetModule">This device type is \'Internet Module\' that help you to control other device via Internet. to control via internet go to setting tab and active \'Away Mode\' and be sure you are connect to the internet.</string>
+    <string name="protection">Protection</string>
+    <string name="security">Security</string>
+    <string name="vibration">Vibration</string>
+    <string name="awayMode">Away Mode</string>
+    <string name="securityOn">Application locked successfully.</string>
+    <string name="securityOff">Application unlocked successfully.</string>
+    <string name="passwordMissmatch">Passwords are not match or admin password is wrong.</string>
+    <string name="passwordLenError">Password must be 4 digits.</string>
+    <string name="passchanged">Password changed successfully.</string>
+    <string name="passwordTitle">Password:</string>
+    <string name="newPasswordTitle">New password:</string>
+    <string name="confirmPassword">Confirm:</string>
 
 
 </resources>

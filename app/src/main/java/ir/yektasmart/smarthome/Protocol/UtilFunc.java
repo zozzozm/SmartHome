@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.Vibrator;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.Arrays;
 
@@ -14,13 +15,14 @@ import ir.yektasmart.smarthome.DelayThread;
 import ir.yektasmart.smarthome.MainActivity;
 import ir.yektasmart.smarthome.Model.BaseDevice;
 import ir.yektasmart.smarthome.Model.Value;
+import ir.yektasmart.smarthome.Mqtt_push;
 import ir.yektasmart.smarthome.R;
 import ir.yektasmart.smarthome.SendUdpSingle;
 
 import static ir.yektasmart.smarthome.MainActivity.pool;
 import static ir.yektasmart.smarthome.MainActivity.vib_delay;
 
-public class UtilFunc extends Activity {
+public class UtilFunc extends Activity implements Mqtt_push.Mqtt_push_result {
 
     private static String TAG = "UtilFunc";
     public static Vibrator vib;
@@ -234,12 +236,10 @@ public class UtilFunc extends Activity {
             case R.id.pickerFav9://fav color 9
             case R.id.pickerFav10://fav color 10
 //            case R.id.groupPagePicker:
-//                comm = Command.SetColor.getByte();
-////                if(v.isPending())
-////                    comm = Command.SetColorPending.getByte();
-//                len = new byte[] {4,0};
-//                ext = new byte[]{(byte) v.getColor().getRed(), (byte) v.getColor().getGreen(), (byte) v.getColor().getBlue()};
-//                break;
+                comm = Command.SetColor.getByte();
+                len = new byte[] {4,0};
+                ext = new byte[]{(byte) v.getColor().getRed(), (byte) v.getColor().getGreen(), (byte) v.getColor().getBlue()};
+                break;
 //
 //            case R.id.groupPageWhiteSwitch:
             case R.id.whiteCheckBox://turn on white led
@@ -449,56 +449,57 @@ public class UtilFunc extends Activity {
                     Log.e("SendUdp", "Const.BROADCAST_IP == null)");
                 }
             }else {
-//                establish_mqtt(msg, port);
+                establish_mqtt(msg, port);
             }
-            //establish_mqtt(msg, port);
+            establish_mqtt(msg, port);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-//    public  void establish_mqtt(byte[] msg, int port){
-//
-//        byte[] portByte = new byte[2];
-//        portByte[0] = (byte)(port/256);
-//        portByte[1] = (byte)(port%256);
-//
-//        try {
-//            if(MainActivity.InternetDevices.size() > 0) {
-//                Mqtt_push push = new Mqtt_push(concat(portByte, msg), "0001" + MainActivity.InternetDevices.get(0).getMac(), Const.UUID.substring(1,16));
-//                push.setListener(this);
-//                Log.e(TAG, "establish_mqtt: " + "0001" + MainActivity.InternetDevices.get(0).getMac() );
-//                push.start();
-//            }
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-//
-//    }
-//
-//    @Override
-//    public void Mqtt_push_failed() {
-//
-//        runOnUiThread(new Runnable() {
-//            @Override
-//            public void run() {
-//
-//                Toast.makeText(context, "Mqtt push failed.", Toast.LENGTH_SHORT).show();
-//                Log.e(TAG, "Mqtt_push_failed: " + "Mqtt push failed" );
-//            }
-//        });
-//    }
-//
-//    @Override
-//    public void Mqtt_push_sucess() {
-//
-//        runOnUiThread(new Runnable() {
-//            @Override
-//            public void run() {
-//
-//                Toast.makeText(context, "Mqtt push sucessed.", Toast.LENGTH_SHORT).show();
-//                Log.e(TAG, "Mqtt_push_failed: " + "Mqtt push sucessed" );
-//            }
-//        });
-//    }
+    public  void establish_mqtt(byte[] msg, int port){
+
+        byte[] portByte = new byte[2];
+        portByte[0] = (byte)(port/256);
+        portByte[1] = (byte)(port%256);
+
+        try {
+            if(MainActivity.InternetDevices.size() > 0) {
+                Mqtt_push push = new Mqtt_push(concat(portByte, msg), "0001" + MainActivity.InternetDevices.get(0).getMac(), Const.UUID.substring(1,16));
+                push.setListener(this);
+                Log.e(TAG, "establish_mqtt: " + "0001" + MainActivity.InternetDevices.get(0).getMac() );
+                push.start();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public void Mqtt_push_failed() {
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                Toast.makeText(context, "Mqtt push failed.", Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "Mqtt_push_failed: " + "Mqtt push failed" );
+            }
+        });
+    }
+
+    @Override
+    public void Mqtt_push_sucess() {
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                Toast.makeText(context, "Mqtt push sucessed.", Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "Mqtt_push_failed: " + "Mqtt push sucessed" );
+            }
+        });
+    }
+
 }

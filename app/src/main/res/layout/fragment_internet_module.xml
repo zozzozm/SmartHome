@@ -1,14 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.InternetModule">
+    android:background="@color/transparent">
 
-    <!-- TODO: Update blank fragment layout -->
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/cloud"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="16dp"
+        android:id="@+id/cloudiconIninternetMoule"
+        />
+
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
-</FrameLayout>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_below="@+id/cloudiconIninternetMoule"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/internetModule"
+        android:layout_centerHorizontal="true"
+        android:textColor="@android:color/white"
+        android:id="@+id/textView2"
+        android:layout_gravity="center"
+        android:lineSpacingMultiplier="1.5"
+        android:textSize="16sp" />
+
+</RelativeLayout>

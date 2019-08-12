@@ -12,6 +12,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import android.os.Vibrator;
+import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -32,14 +34,23 @@ import android.view.Menu;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
+import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttClient;
+import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
+import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.Random;
 import java.util.concurrent.ExecutorService;
 
 import ir.yektasmart.smarthome.Fragments.DeviceFragment;
 import ir.yektasmart.smarthome.Fragments.EditModuleFragment;
 import ir.yektasmart.smarthome.Fragments.GroupFragment;
+import ir.yektasmart.smarthome.Fragments.InternetModuleFragment;
 import ir.yektasmart.smarthome.Fragments.Latch001ModuleFragment;
 import ir.yektasmart.smarthome.Fragments.Latch002ModuleFragment;
 import ir.yektasmart.smarthome.Fragments.RfModuleFragment;
@@ -57,7 +68,10 @@ public class MainActivity extends AppCompatActivity
         Latch001ModuleFragment.OnFragmentInteractionListener,
         Latch002ModuleFragment.OnFragmentInteractionListener,
         RfModuleFragment.OnFragmentInteractionListener,
-        EditModuleFragment.OnFragmentInteractionListener
+        EditModuleFragment.OnFragmentInteractionListener,
+        InternetModuleFragment.OnFragmentInteractionListener,
+        SettingFragment.AwayModeChangeListener,
+        MqttCallback
 {
 
     private static final String TAG = "MainActivity";
@@ -87,6 +101,7 @@ public class MainActivity extends AppCompatActivity
     DhcpInfo d;
     WifiManager wifii;
 
+    BottomNavigationView navView;
     RelativeLayout mainLayout;
     DrawerLayout drawer;
 
@@ -97,6 +112,7 @@ public class MainActivity extends AppCompatActivity
     public static String ARG_BaseName= "arg_baseName";
 
     private Context context;
+    private MainActivity thisCon = this;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -116,6 +132,7 @@ public class MainActivity extends AppCompatActivity
                     return true;
                 case R.id.navigation_settings:
                     SettingFragment settingFragment = new SettingFragment();
+                    settingFragment.setAwayModeListener(thisCon);
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.contentContainer, settingFragment)
                             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
@@ -158,7 +175,7 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
-        BottomNavigationView navView = findViewById(R.id.nav_bottom_view);
+        navView = findViewById(R.id.nav_bottom_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
 
@@ -184,6 +201,66 @@ public class MainActivity extends AppCompatActivity
         replaceDevFragment();
 
         shP = new sharedPrefrence(this);
+        UUID = shP.loadExtraString(Const.SP_UUID);
+        if (UUID.isEmpty()) {
+            UUID = generateUUID();//Log.e(TAG, "uuid len: " + UUID.length());
+            shP.saveExtraString(Const.SP_UUID, UUID);
+        }
+        Const.UUID = UUID;
+        Const.USER_NAME = shP.loadExtraString(Const.SP_LoginUserName);
+        Const.isVibrateMode = shP.loadExtraBool(Const.SP_VibrateMode);
+        vib = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+
+        macAddress = UUID.substring(0,12);
+    }
+
+    private String generateUUID() {
+        String _UUID = "";
+        try {
+            String android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+
+            Calendar cc = Calendar.getInstance();
+            int year=cc.get(Calendar.YEAR);
+            int month=cc.get(Calendar.MONTH);
+            int mDay = cc.get(Calendar.DAY_OF_MONTH);
+            int mHour = cc.get(Calendar.HOUR_OF_DAY);
+            int mMinute = cc.get(Calendar.MINUTE);
+            int mSecond = cc.get(Calendar.SECOND);
+            int mmSecond = cc.get(Calendar.MILLISECOND);
+            int mWeek = cc.get(Calendar.WEEK_OF_YEAR);
+
+            int max = 99999;
+            int min = 0;
+
+            Random r = new Random();
+            int rand = r.nextInt(max - min) + min;
+            int rand1 = r.nextInt(max - min) + min;
+            int rand2 = r.nextInt(max - min) + min;
+            int rand3 = r.nextInt(max - min) + min;
+            int rand4 = r.nextInt(max - min) + min;
+            int rand5 = r.nextInt(max - min) + min;
+            //Log.e(TAG, "rand: " + rand );
+            String date = String.format("%1$04d%2$02d%3$02d%4$02d%5$02d%6$02d%7$03d%8$02d%9$05d".toLowerCase(Locale.US),
+                    year,month,mDay,mHour,mMinute,mSecond,mmSecond,mWeek,rand);
+
+            //get user name and password
+            String name = shP.loadExtraString(Const.SP_LoginUserName);
+
+            String secRand = String.format("%1$05d%2$05d%3$05d%4$05d%5$05d".toLowerCase(Locale.US),rand1,rand2,rand3,rand4,rand5);
+
+            _UUID = android_id + name + date + secRand;
+
+            if(_UUID.length()<51)
+            {
+                _UUID += secRand;
+                _UUID += secRand;
+            }
+            //Log.e(TAG, "UUID: " + _UUID );
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return _UUID.substring(0,_UUID.length()-(_UUID.length()-50));
     }
 
     @Override
@@ -282,17 +359,17 @@ public class MainActivity extends AppCompatActivity
                  ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                  ft.addToBackStack(null);
                  ft.commit();
-                }
-//            else if (g.getType().equals(ModuleType.INTERNET.toString())) {
-//
-//                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-//                InternetModuleFragment internetModuleFragment = InternetModuleFragment.newInstance(g.getId(),g.getName());
-//                ft.replace(R.id.contentContainer, internetModuleFragment);
-//                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-//                ft.addToBackStack(null);
-//                ft.commit();
-//
-//            }else {
+                } else if (g.getType().equals(ModuleType.INTERNET.toString())) {
+
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                InternetModuleFragment internetModuleFragment = InternetModuleFragment.newInstance(g.getId(),g.getName());
+                ft.replace(R.id.contentContainer, internetModuleFragment);
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                ft.addToBackStack(null);
+                ft.commit();
+
+            }
+//            else {
 //
 //                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 //                UnknowModuleFragment unknowModuleFragment = UnknowModuleFragment.newInstance(g.getId(),g.getName());
@@ -309,6 +386,93 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+
+    }
+
+    @Override
+    public void connectionLost(Throwable throwable) {
+        Toast.makeText(getBaseContext(), "Mqtt Connection lost.", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void messageArrived(String s, MqttMessage mqttMessage) throws Exception {
+
+        Log.e(TAG, "messageArrived: " + s + " - " + mqttMessage  );
+        if(s.contains(".UpTime")) {
+
+            String str = String.valueOf(mqttMessage);
+            int milis = Integer.parseInt(str.substring(8, str.length()));
+            milis /= 1000;
+            //Log.e(TAG, "messageArrived: " + "Up time: " + "D:" + milis / 86400 + " H:" + milis / 3600 + " M:" + milis / 60);
+
+            final int d = milis/86400;milis%=86400;
+            final int h = milis/3600;milis%=3600;
+            final int m = milis/60;milis%=60;
+            final int sec = milis;
+            MainActivity.this.runOnUiThread(new Runnable() {
+                public void run() {
+                    Toast.makeText(context, "Up time: "  + d + ":" + h + ":" + m + ":" + sec, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }else {
+            MainActivity.this.runOnUiThread(new Runnable() {
+                public void run() {
+                    Toast.makeText(context, "The command executed successfully", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
+    @Override
+    public void deliveryComplete(IMqttDeliveryToken iMqttDeliveryToken) {
+        Toast.makeText(getBaseContext(), "deliveryComplete", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void awayModeChanged(Boolean isAway) {
+
+        Const.isAwayMode = isAway;
+        InternetDevices = mDB.getInternetDevice();
+
+        if(isAway) {
+
+            if (InternetDevices.size() > 0) {
+                try {
+                    // TODO: should update on network state change. maybe first change to away mode then connect to  wii or LTE 8/14/2017
+
+                    mqttClient = new MqttClient(Const.BROKER, Const.UUID.substring(1, 15), null);
+                    MqttConnectOptions options = new MqttConnectOptions();
+                    options.setCleanSession(true);
+                    options.setKeepAliveInterval(60);
+                    options.setConnectionTimeout(30);
+                    mqttClient.connect(options);
+                    mqttClient.setCallback(this);
+                    mqttClient.subscribe("0001" + InternetDevices.get(InternetDevices.size() - 1).getMac() + ".UpTime");
+                    mqttClient.subscribe("0001" + InternetDevices.get(InternetDevices.size() - 1).getMac() + ".DevRsp");
+
+                } catch (MqttException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        else {
+
+            if (InternetDevices.size() > 0) {
+                try {
+                    // TODO: should update on network state change. maybe first change to away mode then connect to  wii or LTE 8/14/2017
+
+                    if (mqttClient != null && mqttClient.isConnected()) {
+                        mqttClient.setCallback(null);
+                        mqttClient.unsubscribe("0001" + InternetDevices.get(InternetDevices.size() - 1).getMac() + ".UpTime");
+                        mqttClient.unsubscribe("0001" + InternetDevices.get(InternetDevices.size() - 1).getMac() + ".DevRsp");
+                        mqttClient.disconnect();
+                    }
+
+                } catch (MqttException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
 
     }
 }

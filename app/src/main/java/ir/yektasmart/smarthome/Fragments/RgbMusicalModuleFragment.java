@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -38,6 +39,8 @@ import ir.yektasmart.smarthome.Protocol.Command;
 import ir.yektasmart.smarthome.Protocol.UtilFunc;
 import ir.yektasmart.smarthome.R;
 import ir.yektasmart.smarthome.currentView;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 /**
  * A simple {@link Fragment} subclass.

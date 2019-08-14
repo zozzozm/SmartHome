@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/pre_add_device_activity"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:background="@drawable/background_gradient"
+        tools:context=".Activity.preAddDeviceActivity">
+
+        <TextView
+            android:text="Device Passcode:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/passCodeBox"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"
+            android:textAppearance="@android:style/TextAppearance.Holo.Medium.Inverse"
+            android:textColor="@android:color/white" />
+
+        <EditText
+            android:id="@+id/passCodeBox"
+            android:background="@drawable/login_text_box"
+            android:inputType="text"
+            android:layout_width="match_parent"
+            android:text="1002a020a61a59bc"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+
+            android:maxLength="16"
+            android:drawableStart="@drawable/locked_textbox"
+            android:layout_above="@+id/passcodeDesc"
+            android:layout_centerHorizontal="true"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:text="You can find the passcode\nin device box."
+            android:id="@+id/passcodeDesc"
+            android:textAlignment="center"
+            android:lineSpacingExtra="10sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:textAppearance="@android:style/TextAppearance.Medium.Inverse"
+            android:textColor="@color/colorRowLight" />
+
+</RelativeLayout>

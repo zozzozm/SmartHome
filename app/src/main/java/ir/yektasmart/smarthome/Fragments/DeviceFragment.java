@@ -1,9 +1,13 @@
 package ir.yektasmart.smarthome.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -17,32 +21,20 @@ import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
 
+import ir.yektasmart.smarthome.Activity.addDevice;
+import ir.yektasmart.smarthome.Activity.preAddDeviceActivity;
 import ir.yektasmart.smarthome.Adapter.BaseDeviceAdapter;
 import ir.yektasmart.smarthome.MainActivity;
 import ir.yektasmart.smarthome.Model.BaseDevice;
 import ir.yektasmart.smarthome.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link DeviceFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link DeviceFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class DeviceFragment extends Fragment implements AdapterView.OnItemClickListener {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+
 
     ArrayList<BaseDevice> baseDeviceArrayList;
     ListView lv_Device;
     BaseDeviceAdapter modules;
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     private OnFragmentInteractionListener mListener;
 
@@ -50,37 +42,17 @@ public class DeviceFragment extends Fragment implements AdapterView.OnItemClickL
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment DeviceFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static DeviceFragment newInstance(String param1, String param2) {
-        DeviceFragment fragment = new DeviceFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_device, container, false);
     }
 
@@ -140,20 +112,41 @@ public class DeviceFragment extends Fragment implements AdapterView.OnItemClickL
         }catch (Exception e){e.printStackTrace();}
     }
 
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onClickDev(BaseDevice g);
         void onFragmentInteraction(Uri uri);
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        getActivity().getMenuInflater().inflate(R.menu.main, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId())
+        {
+            case R.id.action_add_new_device:
+                Intent intent = new Intent(getActivity(), preAddDeviceActivity.class);
+                intent.putExtra("from","Main");
+                startActivity(intent);
+                return true;
+
+//            case R.id.action_export:
+//                Intent intent1 = new Intent(getActivity(),ExportDeviceUserCon.class);
+//                startActivity(intent1);
+//                break;
+//
+//            case R.id.action_import:
+//                Intent intent2 = new Intent(getActivity(),ImportDevice.class);
+//                startActivity(intent2);
+//                break;
+        }
+
+
+        return true;
     }
 }

@@ -81,6 +81,25 @@
     <string name="passwordTitle">Password:</string>
     <string name="newPasswordTitle">New password:</string>
     <string name="confirmPassword">Confirm:</string>
+    <string name="connectSeccessfully">Connect to server Successfully.</string>
+    <string name="unknowingMessage">Unknowing condition.</string>
+    <string name="serverNotRespond">Server Not Respond.</string>
+    <string name="connectionTimeout">Connection time out.</string>
+    <string name="failedToConnect">Failed to connect server.</string>
+    <string name="communicatingWithServer">Communicating with server</string>
+    <string name="pleaseWait">Please wait</string>
+    <string name="serverSendWrongData">Mismatched data</string>
+    <string name="ssidError">Must be enter.</string>
+    <string name="netPassError">Must be 8~32 characters.</string>
+    <string name="perPassError">Must be 4 characters.</string>
+    <string name="portError">Must be between 1024 and 65500</string>
+    <string name="devNameError">Max 8 characters.</string>
+    <string name="addNewDev">New Device</string>
+    <string name="ssid">SSID:</string>
+    <string name="network_password">Network Password:</string>
+    <string name="personal_password">Personal Password:</string>
+    <string name="portNumber">Port:</string>
+    <string name="device_name_addDev">Device Name:</string>
 
 
 </resources>

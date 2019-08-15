@@ -54,10 +54,6 @@ public class ImportDevice extends AppCompatActivity implements AsyncServerThread
     TextView stateTV;
     TextView messageTV;
 
-
-    /*    public final static int QRcodeWidth = 300 ;
-        private static final String IMAGE_DIRECTORY = "/QRcodeDemonuts";
-        Bitmap bitmap ;*/
     private ImageView qrGen;
     String ip;
 
@@ -71,17 +67,12 @@ public class ImportDevice extends AppCompatActivity implements AsyncServerThread
         messageTV = findViewById(R.id.importDeviceMessage);
         qrGen = findViewById(R.id.qrGen);
 
-        // udpServer = new UdpServer(Const.UDP_PORT, getApplicationContext(), this);
-        //udpServer.start();
-
         tcpServer = new AsyncServerThread(Const.TCP_PORT,this);
         tcpServer.setDaemon(false);
         tcpServer.start();
         try {
             WifiManager wm = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
             ip = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
-
-            //Log.e(TAG, "ip: " + ip);
 
             String[] parts = ip.toString().split("\\.");
 
@@ -125,8 +116,6 @@ public class ImportDevice extends AppCompatActivity implements AsyncServerThread
                     doubleBounce.stop();
                     doubleBounce.setVisible(false,false);
                     messageTV.setText("Scan this code with other phone.");
-                    //bitmap = TextToImageEncode(Const.UDP_HANDSHAKE_MSG  + Const.USER_NAME + Const.UUID);
-                    //qrGen.setImageBitmap(bitmap);
 
                     QRCodeWriter writer = new QRCodeWriter();
                     String sendMessage = Const.UDP_HANDSHAKE_MSG  + Const.USER_NAME + Const.UUID + ip ;//20+??+50

@@ -21,6 +21,8 @@ import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
 
+import ir.yektasmart.smarthome.Activity.ExportDeviceUserCon;
+import ir.yektasmart.smarthome.Activity.ImportDevice;
 import ir.yektasmart.smarthome.Activity.addDevice;
 import ir.yektasmart.smarthome.Activity.preAddDeviceActivity;
 import ir.yektasmart.smarthome.Adapter.BaseDeviceAdapter;
@@ -135,15 +137,15 @@ public class DeviceFragment extends Fragment implements AdapterView.OnItemClickL
                 startActivity(intent);
                 return true;
 
-//            case R.id.action_export:
-//                Intent intent1 = new Intent(getActivity(),ExportDeviceUserCon.class);
-//                startActivity(intent1);
-//                break;
-//
-//            case R.id.action_import:
-//                Intent intent2 = new Intent(getActivity(),ImportDevice.class);
-//                startActivity(intent2);
-//                break;
+            case R.id.action_export:
+                Intent intent1 = new Intent(getActivity(), ExportDeviceUserCon.class);
+                startActivity(intent1);
+                break;
+
+            case R.id.action_import:
+                Intent intent2 = new Intent(getActivity(), ImportDevice.class);
+                startActivity(intent2);
+                break;
         }
 
 

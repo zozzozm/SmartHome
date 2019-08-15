@@ -9,6 +9,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -29,6 +30,7 @@ import ir.yektasmart.smarthome.Model.BaseDevice;
 import ir.yektasmart.smarthome.Model.User;
 import ir.yektasmart.smarthome.R;
 import ir.yektasmart.smarthome.UDPListenerService;
+import ir.yektasmart.smarthome.currentView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -257,4 +259,59 @@ public class EditModuleFragment extends Fragment {
         }
         return  flag;
     }
+
+
+    @Override
+    public void onStart() {
+
+        MainActivity.currPage = currentView.deviceActPage;
+
+        if (baseDevId == -1)
+            Log.e(TAG, "onStart: " + "baseDevId is -1 in starting fragment");
+        else {
+            baseDevice = MainActivity.mDB.getBaseDevice(baseDevId);
+            usersArray = MainActivity.mDB.getBaseDeviceUsers(baseDevId);
+            if (baseDevice == null || usersArray == null) {
+                Log.e(TAG, "onStart: " + "baseDevId is null in getting from database or something else");
+            } else {
+                getActivity().setTitle(baseDevice.getName());
+                super.onStart();
+
+                View view = getView();
+                if (view != null) {
+                    etModuleName = (EditText) view.findViewById(R.id.editModuleName);
+                    etModulePass = (EditText) view.findViewById(R.id.editModulePass);
+                    userListView = (ListView) view.findViewById(R.id.userListView);
+                    userTitle = (TextView) view.findViewById(R.id.userTitle);
+                    etModuleName.setText(baseDevice.getName());
+                    etModulePass.setText(baseDevice.getPass());
+
+                    if (baseDevice.getType().equals("INTERNET")){
+                        baseDevice.setPermission(1);// to be != 0 and  disable checkboxes
+                        etModulePass.setEnabled(false);//to disable password field
+                        for (int i = 0; i < usersArray.size() ; i++) {
+                            usersArray.get(i).setIsActive(1);
+                        }
+                    }
+
+                    users = new UserAdapter(getContext(), R.layout.row_user, this.usersArray);
+                    users.setBaseDevice(baseDevice);
+                    //users.setBaseDevice(baseDevice);
+                    userListView.setAdapter(users);
+                    //userListView.setOnItemClickListener(this);
+
+                    userTitle.setOnLongClickListener(new View.OnLongClickListener() {
+                        @Override
+                        public boolean onLongClick(View view) {
+                            Toast.makeText(getContext(), "Mac:" + baseDevice.getMac()+ "\nPort:"+baseDevice.getPort(), Toast.LENGTH_SHORT).show();
+                            return true;
+                        }
+                    });
+
+
+                }
+            }
+        }
+    }
+
 }

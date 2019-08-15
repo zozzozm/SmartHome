@@ -7,11 +7,13 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -25,6 +27,7 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Objects;
 
@@ -691,5 +694,76 @@ public class RgbMusicalModuleFragment extends Fragment implements View.OnClickLi
             UtilFunc utilFunc = new UtilFunc(getActivity().getBaseContext());
             utilFunc.CommunicationProtocol(baseDevice, cmd, id, v);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        /*return super.onOptionsItemSelected(item);*/
+
+        switch (item.getItemId())
+        {
+            case R.id.action_edit:
+
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                EditModuleFragment editModuleFragment = EditModuleFragment.newInstance(baseDevice.getId());
+                ft.replace(R.id.contentContainer, editModuleFragment);
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                ft.addToBackStack(null);
+                ft.commit();
+                break;
+            case R.id.action_remove:
+                if (baseDevice.getUid() != 0) {
+                    final YektaDialogFragment myDialogFragment = new YektaDialogFragment(getResources().getString(R.string.DELETE),
+                            getResources().getString(R.string.delete_device), new OnYektaDialogReturn() {
+                        @Override
+                        public void negetive() {
+                        }
+
+                        @Override
+                        public void posotive() {
+
+                            MainActivity.mDB.removeDevice(baseDevice.getId(), baseDevice.getTypeId());
+
+                            DeviceFragment devFragment = new DeviceFragment();
+                            getActivity().getSupportFragmentManager().beginTransaction()
+                                    .replace(R.id.contentContainer, devFragment)
+                                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                                    .addToBackStack(null)
+                                    .commit();
+                            Toast.makeText(getActivity(), "Removed", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    myDialogFragment.show(getFragmentManager(), "DialogFragment");
+                }else {
+                    final YektaPromptFragment myDialogFragment = new YektaPromptFragment(getResources().getString(R.string.DELETE),
+                            getResources().getString(R.string.admin_delete_device), new OnYektaPromptReturn() {
+                        @Override
+                        public void negetive() {
+                        }
+
+                        @Override
+                        public void posotive(String withInput) {
+
+                            if(MainActivity.shP.loadExtraString(Const.SP_LoginPaswword).equals(withInput)) {
+                                MainActivity.mDB.removeDevice(baseDevice.getId(), baseDevice.getTypeId());
+
+                                DeviceFragment devFragment = new DeviceFragment();
+                                getActivity().getSupportFragmentManager().beginTransaction()
+                                        .replace(R.id.contentContainer, devFragment)
+                                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                                        .addToBackStack(null)
+                                        .commit();
+                                Toast.makeText(getActivity(), "Removed", Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(getActivity(), "Wrong password.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                    myDialogFragment.show(getFragmentManager(), "DialogFragment");
+                }
+                break;
+        }
+
+        return true;
     }
 }

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_import_device"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/background_gradient"
+    tools:context=".Activity.ImportDevice">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/qrGen"
+        android:padding="32dp"
+        android:layout_centerHorizontal="true"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/importDeviceWaiting"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+            <Space
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+            <com.github.ybq.android.spinkit.SpinKitView
+                android:padding="20dp"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/importDeviceProgressBar"
+                style="@style/SpinKitView.Large.MultiplePulse"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:layout_gravity="center"
+                app:SpinKit_Color="@android:color/white" />
+            <Space
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/importDeviceWaiting"
+        android:layout_centerHorizontal="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Waiting"
+        android:layout_above="@+id/importDeviceDots"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+        android:textColor="@android:color/white"
+        />
+    <TextView
+        android:id="@+id/importDeviceDots"
+        android:layout_above="@+id/importDeviceMessage"
+        android:layout_centerHorizontal="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="......................"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+        android:textColor="@android:color/white"
+        />
+    <TextView
+        android:id="@+id/importDeviceMessage"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Requesting"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+        android:textColor="@color/colorRowLight"
+        />
+</RelativeLayout>

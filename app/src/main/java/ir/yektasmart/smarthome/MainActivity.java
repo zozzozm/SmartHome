@@ -57,6 +57,7 @@ import ir.yektasmart.smarthome.Fragments.RfModuleFragment;
 import ir.yektasmart.smarthome.Fragments.RgbModuleFragment;
 import ir.yektasmart.smarthome.Fragments.RgbMusicalModuleFragment;
 import ir.yektasmart.smarthome.Fragments.SettingFragment;
+import ir.yektasmart.smarthome.Fragments.UnknowModuleFragment;
 import ir.yektasmart.smarthome.Model.BaseDevice;
 import ir.yektasmart.smarthome.Protocol.ModuleType;
 
@@ -72,6 +73,7 @@ public class MainActivity extends AppCompatActivity
         RgbModuleFragment.OnFragmentInteractionListener,
         EditModuleFragment.OnFragmentInteractionListener,
         InternetModuleFragment.OnFragmentInteractionListener,
+        UnknowModuleFragment.OnFragmentInteractionListener,
         SettingFragment.AwayModeChangeListener,
         MqttCallback
 {
@@ -192,6 +194,7 @@ public class MainActivity extends AppCompatActivity
         mDB.addDevice("a020a618765h","rf","1234",1,0,10000,0,0 , DataBase.Confilict.replace);
         mDB.addDevice("a020a618765i","internet","1234",0,0,10000,0,0 , DataBase.Confilict.replace);
         mDB.addDevice("a020a618765o","RGB","1234",3,0,10000,0,0 , DataBase.Confilict.replace);
+        mDB.addDevice("a020a6187651","unknown","1234",7,0,10000,0,0 , DataBase.Confilict.replace);
 
         //        mDB.addUser("UUID1: User Unique Identifier to distinguish users", "Ali" ,1 ,"this is Description.","cell phone" );
         mDB.seeTypes();
@@ -349,16 +352,16 @@ public class MainActivity extends AppCompatActivity
                 ft.commit();
 
             }
-//            else {
-//
-//                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-//                UnknowModuleFragment unknowModuleFragment = UnknowModuleFragment.newInstance(g.getId(),g.getName());
-//                ft.replace(R.id.contentContainer, unknowModuleFragment);
-//                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-//                ft.addToBackStack(null);
-//                ft.commit();
-//
-//            }
+            else {
+
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                UnknowModuleFragment unknowModuleFragment = UnknowModuleFragment.newInstance(g.getId(),g.getName());
+                ft.replace(R.id.contentContainer, unknowModuleFragment);
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                ft.addToBackStack(null);
+                ft.commit();
+
+            }
 
         }catch (Exception e){e.printStackTrace();}
     }

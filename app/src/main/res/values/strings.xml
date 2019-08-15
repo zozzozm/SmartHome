@@ -111,5 +111,7 @@
     </string-array>
     <string name="chooseEffect">Choose effect</string>
     <string name="user_name">user name</string>
+    <string name="cant_recognize">We can\'t recognize the type of this Device. please update app to support newer types.</string>
+    <string name="questionMark">\?</string>
 
 </resources>

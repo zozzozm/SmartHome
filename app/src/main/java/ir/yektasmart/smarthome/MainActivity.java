@@ -54,6 +54,7 @@ import ir.yektasmart.smarthome.Fragments.InternetModuleFragment;
 import ir.yektasmart.smarthome.Fragments.Latch001ModuleFragment;
 import ir.yektasmart.smarthome.Fragments.Latch002ModuleFragment;
 import ir.yektasmart.smarthome.Fragments.RfModuleFragment;
+import ir.yektasmart.smarthome.Fragments.RgbModuleFragment;
 import ir.yektasmart.smarthome.Fragments.RgbMusicalModuleFragment;
 import ir.yektasmart.smarthome.Fragments.SettingFragment;
 import ir.yektasmart.smarthome.Model.BaseDevice;
@@ -68,6 +69,7 @@ public class MainActivity extends AppCompatActivity
         Latch001ModuleFragment.OnFragmentInteractionListener,
         Latch002ModuleFragment.OnFragmentInteractionListener,
         RfModuleFragment.OnFragmentInteractionListener,
+        RgbModuleFragment.OnFragmentInteractionListener,
         EditModuleFragment.OnFragmentInteractionListener,
         InternetModuleFragment.OnFragmentInteractionListener,
         SettingFragment.AwayModeChangeListener,
@@ -189,6 +191,7 @@ public class MainActivity extends AppCompatActivity
         mDB.addDevice("a020a618765g","latch002","1234",10,0,10000,0,0 , DataBase.Confilict.replace);
         mDB.addDevice("a020a618765h","rf","1234",1,0,10000,0,0 , DataBase.Confilict.replace);
         mDB.addDevice("a020a618765i","internet","1234",0,0,10000,0,0 , DataBase.Confilict.replace);
+        mDB.addDevice("a020a618765o","RGB","1234",3,0,10000,0,0 , DataBase.Confilict.replace);
 
         //        mDB.addUser("UUID1: User Unique Identifier to distinguish users", "Ali" ,1 ,"this is Description.","cell phone" );
         mDB.seeTypes();
@@ -297,18 +300,17 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onClickDev(BaseDevice g) {
         try {
-//            if (g.getType().equals(ModuleType.RGBW_LAMP.toString())
-//                    || g.getType().equals(ModuleType.RGBW_STRIP.toString())) {
-//
-//                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-//                RgbModuleFragment rgbModuleFragment = RgbModuleFragment.newInstance(g.getId(),g.getName());
-//                ft.replace(R.id.contentContainer, rgbModuleFragment);
-//                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-//                ft.addToBackStack(null);
-//                ft.commit();
-//            }
-//            else
-            if (g.getType().equals(ModuleType.RF.toString())) {
+            if (g.getType().equals(ModuleType.RGBW_LAMP.toString())
+                    || g.getType().equals(ModuleType.RGBW_STRIP.toString())) {
+
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                RgbModuleFragment rgbModuleFragment = RgbModuleFragment.newInstance(g.getId(),g.getName());
+                ft.replace(R.id.contentContainer, rgbModuleFragment);
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                ft.addToBackStack(null);
+                ft.commit();
+            }
+            else if (g.getType().equals(ModuleType.RF.toString())) {
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 RfModuleFragment rfModuleFragment = RfModuleFragment.newInstance(g.getId(),g.getName());
                 ft.replace(R.id.contentContainer, rfModuleFragment);

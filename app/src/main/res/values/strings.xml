@@ -100,5 +100,16 @@
     <string name="personal_password">Personal Password:</string>
     <string name="portNumber">Port:</string>
     <string name="device_name_addDev">Device Name:</string>
+
+    <string-array name="effects">
+        <item>Effect 1</item>
+        <item>Effect 2</item>
+        <item>Effect 3</item>
+        <item>Effect 4</item>
+        <item>Effect 5</item>
+        <item>Effect 6</item>
+    </string-array>
+    <string name="chooseEffect">Choose effect</string>
     <string name="user_name">user name</string>
+
 </resources>
